@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Alexander Borowski</title>
+  <meta content="writing about things." name="description">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="styles.css" rel="stylesheet" type="text/css">
+
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Inter:100,200,300,regular,500,600,700,800,900"]  }});</script>
+  
+  <link href="images/small_logo.png" rel="shortcut icon">
+  <link href="images/logo_webclip.png" rel="apple-touch-icon">
+</head>
+
+</head>
+<body class="body">
+
+
+  <div class="header">
+    <div class="top-navigation-links" id="id_menu_show">
+      <a href="index.html" class="navigation-link mobile-nav">thoughts</a>
+      <a href="about.html" class="navigation-link mobile-nav">about</a>
+      <a href="contact.html" aria-current="page" class="navigation-link mobile-nav current">let's talk</a>
+
+
+      <div class="close-menu-button"><img src="images/close.svg" loading="lazy" alt="" class="menu-icon" onclick="closeMenu()"></div>
+    </div>
+
+    <a href="index.html" aria-current="page" class="logo-link-block inline-block current"> <img src="images/logo_vector.svg" loading="lazy" width="Auto" alt="" class="image-2" ></a>
+    <div class="open-menu-button"><img src="images/menu.svg" loading="lazy" alt="" class="menu-icon" id="menu_button_id" onclick="openMenu()" ></div>
+  </div>
+
+  <div class="content-section no-padding section">
+    <div class="container center-align"><img src="images/lightbulb.png" loading="lazy" sizes="(max-width: 767px) 92vw, 650px" alt="" class="featured-image"></div>
+  </div>
+  <div class="content-section no-top-padding section">
+    
+    <div class="container">
+      <h1>let's talk</h1>
+      <p>Do you have input on what I wrote? You agree or disagree with me. You think about it too, but maybe very differently. I'm eager to hear your thoughts. <br></p>
+      <div class="form-block form">
+        <form id="form-Contact-Form" name="form-Contact-Form" data-name="Contact Form" method="get" class="contact-form"><input type="text" class="input-field input" maxlength="256" name="name" data-name="Name" placeholder="Your name" id="name" required=""><input type="email" class="input-field input" maxlength="256" name="Email-Address" data-name="Email Address" placeholder="Your email" id="Email-Address" required=""><textarea placeholder="Enter your message here" maxlength="5000" id="Message" name="Message" data-name="Message" required="" class="message-field input"></textarea><input type="submit" value="Send it" data-wait="Please wait..." class="button button"></form>
+        <div class="success-message-2 form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="error-message-2 form-fail">
+          <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-link-container">
+      <div class="copyright-text">© Alexander Borowski</div>
+    </div>
+  </div>
+
+
+
+<script src="myscripts.js"></script>
+
+</body>
+</html>
