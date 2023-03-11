@@ -501,8 +501,24 @@ img {
   align-items: center;
 }
 
+.login {
+  width: 100%;
+  max-width: 730px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 40px;
+  padding-left: 40px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
 
-
+/* I have to edit this section.
+.login-button {
+  position: 
+  bottom: 10px;
+  right: 10px;
+}
+*/
 /* Making it responsive */
 
 
@@ -758,4 +774,7 @@ img {
     padding-left: 20px;
   }
 }
+
+
+
 
