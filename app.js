@@ -1,17 +1,63 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: './session.env' });
+
 import express from 'express';
+import session from 'express-session';
+import passport from 'passport';
+import passportLocal from 'passport-local';
 import mongoose from './seed.js';
 import Post from './models/post.js';
 import User from './models/user.js'; 
-import router from './routes.js';
+import router from './routes/routes.js';
+import authRoutes from './routes/authRoutes.js';
 import path from 'path';
 import Form from './models/form.js';
+
+const LocalStrategy = passportLocal.Strategy;
 
 const app = express();
 const PORT = 3000;
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+
 // Add middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
+
+// Set up Express session
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Initialize Passport and restore authentication state, if any, from the session
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Passport Local Strategy
+passport.use(new LocalStrategy(
+  async (username, password, done) => {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return done(null, false, { message: 'Incorrect username.' });
+    }
+    const isMatch = await user.checkPassword(password);
+    if (!isMatch) {
+      return done(null, false, { message: 'Incorrect password.' });
+    }
+    return done(null, user);
+  }
+));
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 mongoose.set('strictQuery', false);
 
@@ -22,7 +68,6 @@ mongoose.connection.once('open', () => {
     console.log(`👋 Started server on port ${PORT}`);
   });
 });
-
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -50,6 +95,8 @@ app.post('/', (request, response) => {
 // Use the router for all other routes
 app.use('/', router);
 
+// Use authentication routes
+app.use('/auth', authRoutes);
 
 app.post('/posts', (request, response) => {
   const post = new Post({
@@ -67,50 +114,11 @@ app.post('/posts', (request, response) => {
     });
 });
 
-// Get the form data from the request body
-app.post('/contact', (req, res) => {
-  const { name, email, message } = req.body;
-  const form = new Form({ name, email, message });
-  form.save()
-    .then(() => {
-      res.send('Thanks for submitting the form!');
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Server error');
-    });
-});
 
-// Login functionality
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    const user = await User.findOne({ username }); // Find the user in the database by their username
-    if (!user) { // If the user is not found, send an error response
-      res.status(401).send('Invalid username or password');
-      return;
-    }
-
-    const isMatch = await user.comparePassword(password); // Use the comparePassword method to check if the password matches
-    if (!isMatch) { // If the password does not match, send an error response
-      res.status(401).send('Invalid username or password');
-      return;
-    }
-
-    // If the username and password are valid, set a cookie and redirect to the analytics page
-    res.cookie('loggedIn', true);
-    res.redirect('/analytics');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Server error');
-  }
-});
 
 // Analytics page
 app.get('/analytics', (req, res) => {
-  const loggedIn = req.cookies.loggedIn;
-  if (loggedIn) { // If the user is logged in, render the analytics page
+  if (req.session.userId) { // If the user is logged in, render the analytics page
     res.send('Analytics page');
   } else { // If the user is not logged in, redirect to the login page
     res.redirect('/login');

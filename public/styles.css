@@ -82,7 +82,7 @@ blockquote {
   min-height: 100vh;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #fffff6;
+  background-color: #F9F9F9;
   font-family: Georgia, Times, 'Times New Roman', serif;
   color: #000;
   font-size: 20px;
@@ -125,7 +125,7 @@ blockquote {
   border-radius: 4px;
   background-color: #000;
   font-family: Inter, sans-serif;
-  color: #fffff6;
+  color: #F9F9F9;
   font-size: 16px;
   font-weight: 800;
   text-transform: uppercase;
@@ -202,7 +202,7 @@ blockquote {
 }
 
 .inverted-color {
-  color: #fffff6;
+  color: #F9F9F9;
 }
 
 .email-signup-form {
@@ -244,7 +244,7 @@ blockquote {
   height: 50px;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
-  background-color: #fffff6;
+  background-color: #F9F9F9;
   transition: opacity 200ms ease;
   font-family: Inter, sans-serif;
   color: #000;
@@ -278,19 +278,19 @@ blockquote {
   margin-bottom: 0px;
   padding-bottom: 9px;
   padding-left: 16px;
-  border: 1px solid #fffff6;
+  border: 1px solid #F9F9F9;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   background-color: transparent;
   transition: all 200ms ease;
   font-family: Inter, sans-serif;
-  color: #fffff6;
+  color: #F9F9F9;
 }
 
 
 .email-field:focus {
   width: 190px;
-  border-color: #fffff6;
+  border-color: #F9F9F9;
 }
 
 .footer {
@@ -355,7 +355,7 @@ img {
 .navigation-link.current {
   border-radius: 8px;
   background-color: #000;
-  color: #fffff6;
+  color: #F9F9F9;
 }
 
 .top-navigation-links {
@@ -385,7 +385,7 @@ img {
 
 .success-message {
   background-color: transparent;
-  color: #fffff6;
+  color: #F9F9F9;
 }
 
 .error-message {
@@ -450,7 +450,7 @@ img {
   margin-top: 60px;
   border-radius: 8px;
   background-color: #000;
-  color: #fffff6;
+  color: #F9F9F9;
 }
 
 .success-message-2.form-done {
@@ -599,7 +599,7 @@ img {
     display: none;
     flex-direction: column;
     justify-content: center;
-    background-color: #fffff6;
+    background-color: #F9F9F9;
   }
 
   .top-navigation-links-on {
@@ -612,7 +612,7 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #fffff6;
+    background-color: #F9F9F9;
   }
 
   .copyright-text {

@@ -1,32 +1,47 @@
 <head>
-    <meta charset="utf-8">
-    <title>Author Login</title>
-    <meta content="writing about things." name="description">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <link href="styles.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<title>Alexander Borowski</title>
+	<meta content="writing about things." name="description">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<link href="./styles.css" rel="stylesheet" type="text/css">
   
-    <script type="text/javascript">WebFont.load({  google: {    families: ["Inter:100,200,300,regular,500,600,700,800,900"]  }});</script>
-    
-    <link href="/images/small_logo.png" rel="shortcut icon">
-    <link href="/images/logo_webclip.png" rel="apple-touch-icon">
+	<script type="text/javascript">WebFont.load({  google: {    families: ["Inter:100,200,300,regular,500,600,700,800,900"]  }});</script>
+	
+	<link href="/images/small_logo.png" rel="shortcut icon">
+	<link href="/images/logo_webclip.png" rel="apple-touch-icon">
   </head>
+  
   <body class="body">
+	<div class="header">
+	  <div class="top-navigation-links" id="id_menu_show">
+		<a href="./index.html" class="navigation-link mobile-nav">thoughts</a>
+		<a href="./about.html" class="navigation-link mobile-nav">about</a>
+		<a href="./contact.html" class="navigation-link mobile-nav">let's talk</a>
+		<div class="close-menu-button"><img src="./images/close.svg" loading="lazy" alt="" class="menu-icon" onclick="closeMenu()"></div>
+	  </div>
+	  <a href="./index.html" aria-current="page" class="logo-link-block inline-block current"> <img src="./images/logo_vector.svg" loading="lazy" width="Auto" alt="" class="image-2" ></a>
+	  <div class="open-menu-button"><img src="./images/menu.svg" loading="lazy" alt="" class="menu-icon" id="menu_button_id" onclick="openMenu()" ></div>
+	</div>
+  
 	<div class="login">
-        <div>
-		    <h1>Login</h1>
-		    <form method="post" action="/login">
-			<div class="form-block form">
-				<label for="username">Username:</label>
-				<input type="text" name="username" id="username" required>
-			</div>
-			<div>
-				<label for="password">Password:</label>
-				<input type="password" name="password" id="password" required>
-			</div>
-			<div>
-				<button type="submit">Login</button>
-			</div>
+	  <div>
+		<h1>Author Login</h1>
+		<form method="post" action="/login" class="form-block form">
+		  <div class="form-block form">
+			<label for="username" class="hidden"></label>
+			<input type="text" name="username" id="username" placeholder="Username" class="input-field input" required>
+		  </div>
+		  <div class="form-block form">
+			<label for="password" class="hidden"></label>
+			<input type="password" name="password" id="password" placeholder="Password" class="input-field input" required>
+		  </div>
+		  <div>
+			<button type="submit" class="button">Login</button>
+		  </div>
 		</form>
-	    </div>
-    </div>
-</body>
+	  </div>
+	</div>
+  
+	<script src="myscripts.js"></script>
+  </body>
+  
