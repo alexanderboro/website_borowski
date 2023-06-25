@@ -23,7 +23,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 app.set('view engine', 'ejs');
 
 // Add middleware to parse form data
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 // Set up Express session
 app.use(session({
@@ -35,6 +35,11 @@ app.use(session({
 // Initialize Passport and restore authentication state, if any, from the session
 app.use(passport.initialize());
 app.use(passport.session());
+
+// // Redirect requests for /index.html to the root path
+// app.post('/login', (req, res) => {
+//   res.send('hello world');
+// });
 
 // Passport Local Strategy
 passport.use(new LocalStrategy(
@@ -77,8 +82,13 @@ app.get('/index.html', (req, res) => {
   res.redirect('/');
 });
 
+app.get("/123", (req, res) => {
+  res.send("Hello World");
+  });
+
 // Redirect requests for /about.html to /about
 app.get('/about.html', (req, res) => {
+  console.log("123");
   res.redirect('/about');
 });
 
@@ -92,11 +102,14 @@ app.post('/', (request, response) => {
   response.status(404).send('404 Not Found');
 });
 
+
+// Use authentication routes
+app.use('/', authRoutes);
+
 // Use the router for all other routes
 app.use('/', router);
 
-// Use authentication routes
-app.use('/auth', authRoutes);
+
 
 app.post('/posts', (request, response) => {
   const post = new Post({
