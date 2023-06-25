@@ -8,7 +8,7 @@ const cookieSchema = new mongoose.Schema({
 */ 
 
 
-import mongoose from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 
 const ArticleSchema = new mongoose.Schema({
   title: {
@@ -20,8 +20,8 @@ const ArticleSchema = new mongoose.Schema({
     required: true
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    type: String,
+    required: true
   },
   createdOn: {
     type: Date,

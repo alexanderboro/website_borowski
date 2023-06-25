@@ -5,14 +5,17 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import passportLocal from 'passport-local';
-import mongoose from './seed.js';
+import mongoose, { ObjectId } from 'mongoose';
 import Article from './models/article.js';
 import User from './models/user.js'; 
 import router from './routes/routes.js';
 import authRoutes from './routes/authRoutes.js';
 import path from 'path';
 import Form from './models/form.js';
+import { queryAndSendJsonResponse } from './util.js';
+import connectToMongoDB  from './seed.js';
 
+connectToMongoDB();
 const LocalStrategy = passportLocal.Strategy;
 
 const app = express();
@@ -35,6 +38,7 @@ app.use(session({
 // Initialize Passport and restore authentication state, if any, from the session
 app.use(passport.initialize());
 app.use(passport.session());
+console.log("hello world");
 
 // // Redirect requests for /index.html to the root path
 // app.post('/login', (req, res) => {
@@ -97,6 +101,32 @@ app.get('/contact.html', (req, res) => {
   res.redirect('/contact');
 });
 
+app.post('/articles', async (req, res) => {
+  const article = new Article({
+    title: req.body.title,
+    content: req.body.content,
+    author: req.body.author
+  });
+    article.save()
+    .then(() => {
+      res.send('Post created');
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Server error');
+    });
+});
+
+app.get('/articles', async (req, res) => {
+    try {
+      const articles = await Article.find().populate('author'); // Fetch all articles and populate the 'author' field
+      res.render('article-list', { articles }); // Render the 'article-list' EJS template with the articles data
+    } catch (error) {
+      // Handle the error appropriately
+      res.status(500).json({ error: 'An error occurred' });
+    }
+});
+
 // Handle invalid routes with a 404 error 
 app.post('/', (request, response) => {
   response.status(404).send('404 Not Found');
@@ -111,21 +141,26 @@ app.use('/', router);
 
 
 
-app.post('/articles', (request, response) => {
-  const article = new Article({
-    title: 'My favorite spot in Lisbon',
-    content: 'This is a great city for exploring and trying new things.',
-    author: 'Alexander Borowski'
-  });
-  article.save()
-    .then(() => {
-      response.send('Post created');
-    })
-    .catch((error) => {
-      console.error(error);
-      response.status(500).send('Server error');
-    });
-});
+// app.get('/articles', (request, res) => {
+//   // const article = new Article({
+//   //   title: 'My favorite spot in Lisbon',
+//   //   content: 'This is a great city for exploring and trying new things.',
+//   //   author: 'Alexander Borowski'
+//   // });
+//   // article.save()
+//   //   .then(() => {
+//   //     response.send('Post created');
+//   //   })
+//   //   .catch((error) => {
+//   //     console.error(error);
+//   //     response.status(500).send('Server error');
+//   //   });
+
+//   res.send('hello article');
+// });
+
+
+
 
 
 

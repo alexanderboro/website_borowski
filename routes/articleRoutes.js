@@ -1,36 +1,46 @@
 import express from 'express';
 import authMiddleware from './authMiddleware';
 import Article from '../models/article';
+import { queryAndSendJsonResponse } from '../util';
 
 const router = express.Router();
 
-// Handle request and send response
-const handleRequest = async (req, res, operation) => {
-    try {
-        const result = await operation();
-        res.json(result);
-    } catch (error) {
-        res.status(500).json({ error: error.toString() });
-    }
-};
-
 // Blog Post Creation
 router.post('/articles', authMiddleware, (req, res) => {
-    handleRequest(req, res, async () => {
+    queryAndSendJsonResponse(req, res, async () => {
         const article = new Article({ ...req.body, author: req.user._id });
         await article.save();
         return article;
     });
 });
 
+
 // Blog Post Retrieval
 router.get('/articles/:id', (req, res) => {
-    handleRequest(req, res, () => Article.findById(req.params.id).populate('author'));
+    queryAndSendJsonResponse(req, res, () => Article.findById(req.params.id).populate('author'));
 });
+
+// List 
+router.get('/articles', (req, res) => {
+    queryAndSendJsonResponse(req, res, () => {
+      Article.find()
+        .populate('author')
+        .exec((err, articles) => {
+          if (err) {
+            // Handle the error appropriately
+            return res.status(500).json({ error: 'An error occurred' });
+          }
+          
+          // Return the list of articles
+          res.json(articles);
+        });
+    });
+  });
+  
 
 // Blog Post Update
 router.put('/articles/:id', authMiddleware, (req, res) => {
-    handleRequest(req, res, async () => {
+    queryAndSendJsonResponse(req, res, async () => {
         const article = await Article.findOne({ _id: req.params.id, author: req.user._id });
         Object.assign(article, req.body);
         await article.save();
@@ -40,7 +50,7 @@ router.put('/articles/:id', authMiddleware, (req, res) => {
 
 // Blog Post Deletion
 router.delete('/articles/:id', authMiddleware, (req, res) => {
-    handleRequest(req, res, () => Article.deleteOne({ _id: req.params.id, author: req.user._id }));
+    queryAndSendJsonResponse(req, res, () => Article.deleteOne({ _id: req.params.id, author: req.user._id }));
 });
 
 // Route for editing article
