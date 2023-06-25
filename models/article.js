@@ -10,7 +10,7 @@ const cookieSchema = new mongoose.Schema({
 
 import mongoose from 'mongoose';
 
-const PostSchema = new mongoose.Schema({
+const ArticleSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
@@ -29,6 +29,6 @@ const PostSchema = new mongoose.Schema({
   }
 });
 
-const Post = mongoose.model('Post', PostSchema);
+const Article = mongoose.model('Article', ArticleSchema);
 
-export default Post;
+export default Article;

@@ -1,6 +1,6 @@
 import express from 'express';
 import authMiddleware from './authMiddleware';
-import Post from '../models/post';
+import Article from '../models/article';
 
 const router = express.Router();
 
@@ -17,30 +17,45 @@ const handleRequest = async (req, res, operation) => {
 // Blog Post Creation
 router.post('/articles', authMiddleware, (req, res) => {
     handleRequest(req, res, async () => {
-        const post = new Post({ ...req.body, author: req.user._id });
-        await post.save();
-        return post;
+        const article = new Article({ ...req.body, author: req.user._id });
+        await article.save();
+        return article;
     });
 });
 
 // Blog Post Retrieval
 router.get('/articles/:id', (req, res) => {
-    handleRequest(req, res, () => Post.findById(req.params.id).populate('author'));
+    handleRequest(req, res, () => Article.findById(req.params.id).populate('author'));
 });
 
 // Blog Post Update
 router.put('/articles/:id', authMiddleware, (req, res) => {
     handleRequest(req, res, async () => {
-        const post = await Post.findOne({ _id: req.params.id, author: req.user._id });
-        Object.assign(post, req.body);
-        await post.save();
-        return post;
+        const article = await Article.findOne({ _id: req.params.id, author: req.user._id });
+        Object.assign(article, req.body);
+        await article.save();
+        return article;
     });
 });
 
 // Blog Post Deletion
 router.delete('/articles/:id', authMiddleware, (req, res) => {
-    handleRequest(req, res, () => Post.deleteOne({ _id: req.params.id, author: req.user._id }));
+    handleRequest(req, res, () => Article.deleteOne({ _id: req.params.id, author: req.user._id }));
+});
+
+// Route for editing article
+app.get('/articles/:id/edit', (req, res) =>{
+    // Fetch article by id, then render the 'edit' view
+    res.send('Edit article');
+});
+
+// Route for deleting article
+app.post('/articles/:id/delete', (req, res) => {
+    // Delete article by id, then re-render the article list
+    res.send('Delete article');
+    // deleteOne({ _id: req.params.id, author: req.user._id })
+    // .then(() => {
+    //     res.redirect('/articles');
 });
 
 export default router;

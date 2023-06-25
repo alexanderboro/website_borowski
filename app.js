@@ -6,7 +6,7 @@ import session from 'express-session';
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import mongoose from './seed.js';
-import Post from './models/post.js';
+import Article from './models/article.js';
 import User from './models/user.js'; 
 import router from './routes/routes.js';
 import authRoutes from './routes/authRoutes.js';
@@ -111,13 +111,13 @@ app.use('/', router);
 
 
 
-app.post('/posts', (request, response) => {
-  const post = new Post({
+app.post('/articles', (request, response) => {
+  const article = new Article({
     title: 'My favorite spot in Lisbon',
     content: 'This is a great city for exploring and trying new things.',
     author: 'Alexander Borowski'
   });
-  post.save()
+  article.save()
     .then(() => {
       response.send('Post created');
     })

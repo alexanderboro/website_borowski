@@ -1,6 +1,6 @@
 // routes.js
 import express from 'express';
-import Post from '../models/post.js';
+import Article from '../models/article.js';
 import authMiddleware from './authMiddleware.js';
 import Form from '../models/form.js';
 
@@ -35,8 +35,8 @@ router.post('/articles', authMiddleware, (req, res) => {
   const { title, content } = req.body;
   const author = req.user.username; // Assuming the user object is stored in req.user after authentication
 
-  const post = new Post({ title, content, author });
-  post.save()
+  const article = new Article({ title, content, author });
+  article.save()
     .then(() => {
       res.status(201).json({ message: 'Article created' });
     })
@@ -50,13 +50,13 @@ router.put('/articles/:id', authMiddleware, (req, res) => {
   const { title, content } = req.body;
   const author = req.user.username;
 
-  Post.findOneAndUpdate(
+  Article.findOneAndUpdate(
     { _id: req.params.id, author }, // Find the article by ID and author to ensure ownership
     { title, content },
     { new: true }
   )
-    .then((updatedPost) => {
-      if (!updatedPost) {
+    .then((updatedArticle) => {
+      if (!updatedArticle) {
         return res.status(404).json({ message: 'Article not found' });
       }
       res.status(200).json({ message: 'Article updated' });
@@ -70,7 +70,7 @@ router.put('/articles/:id', authMiddleware, (req, res) => {
 router.delete('/articles/:id', authMiddleware, (req, res) => {
   const author = req.user.username;
 
-  Post.findOneAndDelete({ _id: req.params.id, author }) // Find the article by ID and author to ensure ownership
+  Article.findOneAndDelete({ _id: req.params.id, author }) // Find the article by ID and author to ensure ownership
     .then((deletedPost) => {
       if (!deletedPost) {
         return res.status(404).json({ message: 'Article not found' });
