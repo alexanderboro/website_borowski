@@ -1,12 +1,12 @@
 import express from 'express';
-import authMiddleware from './authMiddleware';
-import Article from '../models/article';
-import { queryAndSendJsonResponse } from '../util';
+import authMiddleware from './authMiddleware.js';
+import Article from '../models/article.js';
+import { queryAndSendJsonResponse } from '../util.js';
 
-const router = express.Router();
+const articleRouter = express.Router();
 
 // Blog Post Creation
-router.post('/articles', authMiddleware, (req, res) => {
+articleRouter.post('/articles', authMiddleware, (req, res) => {
     queryAndSendJsonResponse(req, res, async () => {
         const article = new Article({ ...req.body, author: req.user._id });
         await article.save();
@@ -14,14 +14,29 @@ router.post('/articles', authMiddleware, (req, res) => {
     });
 });
 
+// Article Creation
+articleRouter.post('/articles', authMiddleware, (req, res) => {
+    const { title, content } = req.body;
+    const author = req.user.username; // Assuming the user object is stored in req.user after authentication
+  
+    const article = new Article({ title, content, author });
+    // const article = new Article({ ...req.body, author: req.user._id });
+    article.save()
+      .then(() => {
+        res.status(201).json({ message: 'Article created' });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: 'Server error' });
+      });
+  });
 
 // Blog Post Retrieval
-router.get('/articles/:id', (req, res) => {
+articleRouter.get('/articles/:id', (req, res) => {
     queryAndSendJsonResponse(req, res, () => Article.findById(req.params.id).populate('author'));
 });
 
 // List 
-router.get('/articles', (req, res) => {
+articleRouter.get('/articles', (req, res) => {
     queryAndSendJsonResponse(req, res, () => {
       Article.find()
         .populate('author')
@@ -31,15 +46,50 @@ router.get('/articles', (req, res) => {
             return res.status(500).json({ error: 'An error occurred' });
           }
           
-          // Return the list of articles
+          res.render('article-list', { articles }); // Render the 'article-list' EJS template with the articles data
+        // Return the list of articles
           res.json(articles);
         });
     });
   });
   
 
+
+
+
+
+// Route for rendering the edit-article page
+articleRouter.get('/articles/:id/edit', (req, res) =>{
+    // Fetch article by id, then render the 'edit' view
+    Article.findById(req.params.id)
+    .then((article) => {
+        res.render('article-edit', { article });
+    // res.send('Edit article');
+    });
+});
+
+// Route for editing articles
+articleRouter.put('/articles/:id', async (req, res) => {
+    const { title, content } = req.body;
+    const updatedArticle = Article.findByIdAndUpdate(
+    // { _id: req.params.id, author }, // Find the article by ID and author to ensure ownership
+    req.params.id,
+    { title, content },
+    { new: true } 
+    )    
+    .then((updatedArticle) => {
+    if (!updatedArticle) {
+        return res.status(404).json({ message: `No Article with the id ${req.params.id} found` });
+    }
+    res.status(200).json({ message: 'Article updated' });
+    })
+    .catch((error) => {
+    res.status(500).json({ message: 'Server error' });
+    });
+}); 
+
 // Blog Post Update
-router.put('/articles/:id', authMiddleware, (req, res) => {
+articleRouter.put('/articles/:id', authMiddleware, (req, res) => {
     queryAndSendJsonResponse(req, res, async () => {
         const article = await Article.findOne({ _id: req.params.id, author: req.user._id });
         Object.assign(article, req.body);
@@ -48,24 +98,26 @@ router.put('/articles/:id', authMiddleware, (req, res) => {
     });
 });
 
+// Article Deletion
+articleRouter.delete('/articles/:id', authMiddleware, (req, res) => {
+    const author = req.user.username;
+  
+    // Article.findOneAndDelete({ _id: req.params.id, author }) // Find the article by ID and author to ensure ownership
+    Article.findOneAndDelete(req.params.id) // Find the article by ID and author to ensure ownership
+      .then((deletedPost) => {
+        if (!deletedPost) {
+          return res.status(404).json({ message: 'Article with the given ID not found' });
+        }
+        res.status(200).json({ message: 'Article deleted' });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: 'Server error' });
+      });
+  });
+
 // Blog Post Deletion
-router.delete('/articles/:id', authMiddleware, (req, res) => {
+articleRouter.delete('/articles/:id', authMiddleware, (req, res) => {
     queryAndSendJsonResponse(req, res, () => Article.deleteOne({ _id: req.params.id, author: req.user._id }));
 });
 
-// Route for editing article
-app.get('/articles/:id/edit', (req, res) =>{
-    // Fetch article by id, then render the 'edit' view
-    res.send('Edit article');
-});
-
-// Route for deleting article
-app.post('/articles/:id/delete', (req, res) => {
-    // Delete article by id, then re-render the article list
-    res.send('Delete article');
-    // deleteOne({ _id: req.params.id, author: req.user._id })
-    // .then(() => {
-    //     res.redirect('/articles');
-});
-
-export default router;
+export default articleRouter;

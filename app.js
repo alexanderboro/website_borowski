@@ -9,11 +9,13 @@ import mongoose, { ObjectId } from 'mongoose';
 import Article from './models/article.js';
 import User from './models/user.js'; 
 import router from './routes/routes.js';
+import articleRouter from './routes/articleRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import path from 'path';
 import Form from './models/form.js';
 import { queryAndSendJsonResponse } from './util.js';
 import connectToMongoDB  from './seed.js';
+import methodOverride from 'method-override';
 
 connectToMongoDB();
 const LocalStrategy = passportLocal.Strategy;
@@ -70,7 +72,7 @@ passport.deserializeUser(function(user, done) {
 
 mongoose.set('strictQuery', false);
 
-// Using the mongoose instance from seed.js to connect to the db
+// Using the mongoose instance from seed.js to connect to the DB
 mongoose.connection.once('open', () => {
   console.log('💽 Database connected');
   app.listen(PORT, () => {
@@ -81,87 +83,21 @@ mongoose.connection.once('open', () => {
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Redirect requests for /index.html to the root path
-app.get('/index.html', (req, res) => {
-  res.redirect('/');
-});
+// To allow PUT and DELETE requests to be sent via forms
+app.use(methodOverride('_method'));
 
 app.get("/123", (req, res) => {
   res.send("Hello World");
   });
 
-// Redirect requests for /about.html to /about
-app.get('/about.html', (req, res) => {
-  console.log("123");
-  res.redirect('/about');
-});
-
-// Redirect requests for /contact.html to /contact
-app.get('/contact.html', (req, res) => {
-  res.redirect('/contact');
-});
-
-app.post('/articles', async (req, res) => {
-  const article = new Article({
-    title: req.body.title,
-    content: req.body.content,
-    author: req.body.author
-  });
-    article.save()
-    .then(() => {
-      res.send('Post created');
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Server error');
-    });
-});
-
-app.get('/articles', async (req, res) => {
-    try {
-      const articles = await Article.find().populate('author'); // Fetch all articles and populate the 'author' field
-      res.render('article-list', { articles }); // Render the 'article-list' EJS template with the articles data
-    } catch (error) {
-      // Handle the error appropriately
-      res.status(500).json({ error: 'An error occurred' });
-    }
-});
-
-// Handle invalid routes with a 404 error 
-app.post('/', (request, response) => {
-  response.status(404).send('404 Not Found');
-});
-
 
 // Use authentication routes
-app.use('/', authRoutes);
+app.use(authRoutes);
+
+app.use(articleRouter);
 
 // Use the router for all other routes
-app.use('/', router);
-
-
-
-// app.get('/articles', (request, res) => {
-//   // const article = new Article({
-//   //   title: 'My favorite spot in Lisbon',
-//   //   content: 'This is a great city for exploring and trying new things.',
-//   //   author: 'Alexander Borowski'
-//   // });
-//   // article.save()
-//   //   .then(() => {
-//   //     response.send('Post created');
-//   //   })
-//   //   .catch((error) => {
-//   //     console.error(error);
-//   //     response.status(500).send('Server error');
-//   //   });
-
-//   res.send('hello article');
-// });
-
-
-
-
+app.use(router);
 
 
 // Analytics page
@@ -171,4 +107,8 @@ app.get('/analytics', (req, res) => {
   } else { // If the user is not logged in, redirect to the login page
     res.redirect('/login');
   }
+});
+
+app.use((req, res) => {
+  res.status(404).send('404 Not Found');
 });
