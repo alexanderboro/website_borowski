@@ -35,25 +35,29 @@ articleRouter.get('/articles/:id', (req, res) => {
     queryAndSendJsonResponse(req, res, () => Article.findById(req.params.id).populate('author'));
 });
 
+articleRouter.get('/articles/:id', (req, res) => {
+    queryAndSendJsonResponse(req, res, () => Article.findById(req.params.id).populate('author'));
+});
+
+
+// Route for rendering the view-article page
+articleRouter.get('/articles/:id/view', (req, res) =>{
+    // Fetch article by id, then render the 'view' view
+    Article.findById(req.params.id)
+    .then((article) => {
+        res.render('article-view', { article });
+
+    });
+});
+
 // List 
 articleRouter.get('/articles', (req, res) => {
-    queryAndSendJsonResponse(req, res, () => {
-      Article.find()
-        .populate('author')
-        .exec((err, articles) => {
-          if (err) {
-            // Handle the error appropriately
-            return res.status(500).json({ error: 'An error occurred' });
-          }
-          
-          res.render('article-list', { articles }); // Render the 'article-list' EJS template with the articles data
-        // Return the list of articles
-          res.json(articles);
-        });
-    });
-  });
-  
-
+    Article.find().then((articles) => {
+    res.render('article-list', { articles }); // Render the 'article-list' EJS template with the articles data
+    }).catch((error) => {
+    return res.status(500).json({ error: 'An error occurred' });
+});
+});
 
 
 
