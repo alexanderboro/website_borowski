@@ -1,5 +1,5 @@
 import express from 'express';
-import authMiddleware from './authMiddleware.js';
+import isAuthenticated from '../middleware/isAuthenticated.js';
 import Article from '../models/article.js';
 import { queryAndSendJsonResponse } from '../util.js';
 
@@ -26,16 +26,16 @@ articleRouter.get('/articles/:id', (req, res) =>{
 
 
 // Blog Post Creation
-articleRouter.post('/articles', authMiddleware, (req, res) => {
+articleRouter.post('/articles', isAuthenticated, (req, res) => {
     queryAndSendJsonResponse(req, res, async () => {
-        const article = new Article({ ...req.body, author: req.user._id });
+        const article = new Article({ ...req.body, author: req.user.username });
         await article.save();
         return article;
     });
 });
 
 // Route for rendering the edit-article page
-articleRouter.get('/articles/:id/edit', authMiddleware, (req, res) =>{
+articleRouter.get('/articles/:id/edit', isAuthenticated, (req, res) =>{
     // Fetch article by id, then render the 'edit' view
     Article.findById(req.params.id)
     .then((article) => {
@@ -44,7 +44,7 @@ articleRouter.get('/articles/:id/edit', authMiddleware, (req, res) =>{
 });
 
 // Blog Post Update
-articleRouter.put('/articles/:id', authMiddleware, (req, res) => {
+articleRouter.put('/articles/:id', isAuthenticated, (req, res) => {
     queryAndSendJsonResponse(req, res, async () => {
         const article = await Article.findOne({ _id: req.params.id});
         Object.assign(article, req.body);
@@ -55,7 +55,7 @@ articleRouter.put('/articles/:id', authMiddleware, (req, res) => {
 });
 
 // Blog Post Deletion
-articleRouter.delete('/articles/:id', authMiddleware, (req, res) => {
+articleRouter.delete('/articles/:id', isAuthenticated, (req, res) => {
     queryAndSendJsonResponse(req, res, () => Article.deleteOne({ _id: req.params.id} ));
     console.log(`Article ${req.params.id} deleted`);
 });

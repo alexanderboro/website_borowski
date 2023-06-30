@@ -16,8 +16,8 @@ import Form from './models/form.js';
 import { queryAndSendJsonResponse } from './util.js';
 import connectToMongoDB  from './seed.js';
 import methodOverride from 'method-override';
-import logPageView from './middleware/page-viewer.js';
-import authMiddleware from './routes/authMiddleware.js';
+import logPageView from './middleware/logPageView.js';
+import isAuthenticated from './middleware/isAuthenticated.js';
 import PageView from './models/page-view.js';
 
 connectToMongoDB();
@@ -91,7 +91,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // To allow PUT and DELETE requests to be sent via forms
 app.use(methodOverride('_method'));
 
-app.get("/123", authMiddleware, (req, res) => {
+app.get("/123", isAuthenticated, (req, res) => {
   console.log(req.session.user);
   console.log(req.user);
   res.send("Hello World!");
@@ -108,7 +108,7 @@ app.use(router);
 
 
 // Analytics page
-app.get('/analytics', authMiddleware, async (req, res) => {
+app.get('/analytics', isAuthenticated, async (req, res) => {
     const pageViews = await PageView.find({});
     res.render('analytics', { user: req.user, pageViews: pageViews });
 });

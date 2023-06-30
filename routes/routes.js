@@ -1,7 +1,7 @@
 // routes.js
 import express from 'express';
 import Article from '../models/article.js';
-import authMiddleware from './authMiddleware.js';
+import isAuthenticated from '../middleware/isAuthenticated.js';
 import Form from '../models/form.js';
 
 const router = express.Router();
