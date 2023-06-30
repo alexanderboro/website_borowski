@@ -11,7 +11,6 @@ Articles
 
 /articles/view - GET to see all articles rendered
 /articles/:id/view - GET to see a single article rendered
-/articles/:id/create - GET to see HTTP create-form
 /articles/:id/edit - GET to see HTTP edit-form
 
 
