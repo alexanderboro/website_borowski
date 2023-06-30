@@ -35,7 +35,7 @@ articleRouter.post('/articles', authMiddleware, (req, res) => {
 });
 
 // Route for rendering the edit-article page
-articleRouter.get('/articles/:id/edit', (req, res) =>{
+articleRouter.get('/articles/:id/edit', authMiddleware, (req, res) =>{
     // Fetch article by id, then render the 'edit' view
     Article.findById(req.params.id)
     .then((article) => {

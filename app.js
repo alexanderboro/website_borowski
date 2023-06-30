@@ -17,6 +17,7 @@ import { queryAndSendJsonResponse } from './util.js';
 import connectToMongoDB  from './seed.js';
 import methodOverride from 'method-override';
 import logPageView from './middleware/page-viewer.js';
+import authMiddleware from './routes/authMiddleware.js';
 
 connectToMongoDB();
 const LocalStrategy = passportLocal.Strategy;
@@ -89,8 +90,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // To allow PUT and DELETE requests to be sent via forms
 app.use(methodOverride('_method'));
 
-app.get("/123", (req, res) => {
-  res.send("Hello World");
+app.get("/123", authMiddleware, (req, res) => {
+  console.log(req.session.user);
+  console.log(req.user);
+  res.send("Hello World!");
   });
 
 
@@ -104,12 +107,8 @@ app.use(router);
 
 
 // Analytics page
-app.get('/analytics', (req, res) => {
-  if (req.session.userId) { // If the user is logged in, render the analytics page
-    res.render('analytics');
-  } else { // If the user is not logged in, redirect to the login page
-    res.redirect('/login');
-  }
+app.get('/analytics', authMiddleware, (req, res) => {
+    res.render('analytics', { user: req.user });
 });
 
 app.use((req, res) => {
