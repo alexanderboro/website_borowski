@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blog Analytics</title>
+</head>
+<body>
+  <h1>Page Views</h1>
+
+  <ul>
+    <% pageViews.forEach((pageView) => { %>
+      <li>
+        <strong><%= pageView.pageUrl %></strong>: <%= pageView.views %> views
+      </li>
+    <% }); %>
+  </ul>
+</body>
+</html>

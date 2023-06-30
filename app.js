@@ -16,6 +16,7 @@ import Form from './models/form.js';
 import { queryAndSendJsonResponse } from './util.js';
 import connectToMongoDB  from './seed.js';
 import methodOverride from 'method-override';
+import logPageView from './middleware/page-viewer.js';
 
 connectToMongoDB();
 const LocalStrategy = passportLocal.Strategy;
@@ -34,12 +35,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false
 }));
 
 // Initialize Passport and restore authentication state, if any, from the session
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(logPageView);
 console.log("hello world");
 
 // // Redirect requests for /index.html to the root path
@@ -62,11 +64,12 @@ passport.use(new LocalStrategy(
     return done(null, user);
   }
 ));
-passport.serializeUser(function(user, done) {
+
+passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
@@ -103,7 +106,7 @@ app.use(router);
 // Analytics page
 app.get('/analytics', (req, res) => {
   if (req.session.userId) { // If the user is logged in, render the analytics page
-    res.send('Analytics page');
+    res.render('analytics');
   } else { // If the user is not logged in, redirect to the login page
     res.redirect('/login');
   }

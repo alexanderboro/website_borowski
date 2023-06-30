@@ -22,3 +22,4 @@ Ways I have seen to get the username
 - `const author = req.user.username;`
 - `author: req.user._id` 
 - `req.body.author`
+- `req.session.userId`
