@@ -46,16 +46,18 @@ articleRouter.get('/articles/:id/edit', authMiddleware, (req, res) =>{
 // Blog Post Update
 articleRouter.put('/articles/:id', authMiddleware, (req, res) => {
     queryAndSendJsonResponse(req, res, async () => {
-        const article = await Article.findOne({ _id: req.params.id, author: req.user._id });
+        const article = await Article.findOne({ _id: req.params.id});
         Object.assign(article, req.body);
         await article.save();
         return article;
     });
+    console.log(`Article ${req.params.id} updated`);
 });
 
 // Blog Post Deletion
 articleRouter.delete('/articles/:id', authMiddleware, (req, res) => {
-    queryAndSendJsonResponse(req, res, () => Article.deleteOne({ _id: req.params.id, author: req.user._id }));
+    queryAndSendJsonResponse(req, res, () => Article.deleteOne({ _id: req.params.id} ));
+    console.log(`Article ${req.params.id} deleted`);
 });
 
 export default articleRouter;

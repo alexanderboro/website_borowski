@@ -18,6 +18,7 @@ import connectToMongoDB  from './seed.js';
 import methodOverride from 'method-override';
 import logPageView from './middleware/page-viewer.js';
 import authMiddleware from './routes/authMiddleware.js';
+import PageView from './models/page-view.js';
 
 connectToMongoDB();
 const LocalStrategy = passportLocal.Strategy;
@@ -107,8 +108,9 @@ app.use(router);
 
 
 // Analytics page
-app.get('/analytics', authMiddleware, (req, res) => {
-    res.render('analytics', { user: req.user });
+app.get('/analytics', authMiddleware, async (req, res) => {
+    const pageViews = await PageView.find({});
+    res.render('analytics', { user: req.user, pageViews: pageViews });
 });
 
 app.use((req, res) => {

@@ -2,6 +2,7 @@ import express from 'express';
 import User from '../models/user.js';
 import Article from '../models/article.js';
 import passport from 'passport';
+import authMiddleware from './authMiddleware.js';
 
 const router = express.Router();
 
@@ -27,14 +28,26 @@ const router = express.Router();
 router.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
     failureFlash: true
-}), async (req, res) => {
+}), (req, res) => {
+    res.redirect('/admin');
+
+    // try {
+    //     const articles = await Article.find().populate('author');
+    //     return res.render("admin", { user: req.user, articles });
+    // } catch (error) {
+    // return res.status(500).json({ error: error.toString() });
+    // }
+});
+
+router.get("/admin", authMiddleware, async (req, res) => {
     try {
         const articles = await Article.find().populate('author');
         return res.render("admin", { user: req.user, articles });
     } catch (error) {
-        return res.status(500).json({ error: error.toString() });
+    return res.status(500).json({ error: error.toString() });
     }
 });
+
 
 router.post('/logout', (req, res) => {
     if (!req.user) {
