@@ -44,12 +44,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(logPageView);
-console.log("hello world");
-
-// // Redirect requests for /index.html to the root path
-// app.post('/login', (req, res) => {
-//   res.send('hello world');
-// });
 
 // Passport Local Strategy
 passport.use(new LocalStrategy(
@@ -85,6 +79,7 @@ mongoose.connection.once('open', () => {
   });
 });
 
+
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -97,6 +92,14 @@ app.get("/123", isAuthenticated, (req, res) => {
   res.send("Hello World!");
   });
 
+// Home page
+app.get('/index.html', (req, res) => {
+  Article.find().then((articles) => {
+  res.render('index', { articles }); 
+  }).catch((error) => {
+  return res.status(500).json({ error: `An error occurred: ${error}` });
+});
+});
 
 // Use authentication routes
 app.use(authRoutes);
