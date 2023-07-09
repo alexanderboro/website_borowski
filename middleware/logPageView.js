@@ -1,4 +1,4 @@
-import PageView from '../models/page-view.js'; // Assuming your model file is named pageView.js
+import PageView from '../models/page-view.js'; 
 
 const logPageView = async (req, res, next) => {
   const url = req.originalUrl;

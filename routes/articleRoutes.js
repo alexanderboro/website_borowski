@@ -10,8 +10,8 @@ articleRouter.get('/articles', (req, res) => {
     Article.find().then((articles) => {
     res.render('article-list', { articles }); // Render the 'article-list' EJS template with the articles data
     }).catch((error) => {
-    return res.status(500).json({ error: 'An error occurred' });
-});
+        return res.status(500).json({ error: `An error occurred: ${error}` });
+    });
 });
 
 // Route for rendering the view-article page
