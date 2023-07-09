@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 import User from './models/user.js';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env' });
 
 function connectToMongoDB() {
 
-mongoose.connect('mongodb+srv://alexanderborowski:rlZbDr1lvxmUqNT7@cluster0.edwk7gv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.edwk7gv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
   .then(() => {
     console.log('💿 Database connected to Mongo Db Atlas');
     // const user = new User({ username: 'alexboro', password: '746shs6as&sdasd+a' });
