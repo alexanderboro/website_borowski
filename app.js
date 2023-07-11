@@ -24,7 +24,7 @@ connectToMongoDB();
 const LocalStrategy = passportLocal.Strategy;
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // <- fallback
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 // Set EJS as the view engine
