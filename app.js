@@ -101,6 +101,16 @@ app.get('/index.html', (req, res) => {
 });
 });
 
+app.get('/', (req, res) => {
+  Article.find()
+    .then((articles) => {
+      res.render('index', { articles });
+    })
+    .catch((error) => {
+      return res.status(500).json({ error: `An error occurred: ${error}` });
+    });
+});
+
 // Use authentication routes
 app.use(authRoutes);
 
