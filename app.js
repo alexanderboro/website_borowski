@@ -18,7 +18,8 @@ import connectToMongoDB  from './seed.js';
 import methodOverride from 'method-override';
 import logPageView from './middleware/logPageView.js';
 import isAuthenticated from './middleware/isAuthenticated.js';
-import PageView from './models/page-view.js';
+import PageView from './models/page-view.js'; 
+import flash from 'connect-flash';
 
 connectToMongoDB();
 const LocalStrategy = passportLocal.Strategy;
@@ -39,6 +40,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+
+// Using Flash Messages
+app.use(flash());
 
 // Initialize Passport and restore authentication state, if any, from the session
 app.use(passport.initialize());
@@ -122,7 +126,7 @@ app.use(router);
 
 // Analytics page
 app.get('/analytics', isAuthenticated, async (req, res) => {
-    const pageViews = await PageView.find({});
+    const pageViews = await PageView.find({}).sort({ views: -1 });
     res.render('analytics', { user: req.user, pageViews: pageViews });
 });
 
