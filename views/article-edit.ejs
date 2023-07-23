@@ -1,4 +1,4 @@
-<h1>Edit Article</h1>
+<!-- <h1>Edit Article</h1>
 
 <form action="/articles/<%= article._id %>?_method=PUT" method="POST">
   <label for="title">Title:</label>
@@ -9,3 +9,69 @@
 
   <input type="submit" value="Update Article">
 </form>
+
+<div class="content-section no-top-padding section">
+  <h1>Edit Article</h1>
+  <div class="form-block form">
+      <form action="/articles/<%= article._id %>?_method=PUT" method="POST" class="contact-form">
+          <input type="text" class="input-field input" maxlength="256" name="title" data-name="Title" placeholder="Article Title" id="title" required="" value="<%= article.title %>">
+          <textarea placeholder="Article Content" maxlength="5000" id="content" name="content" data-name="Content" required="" class="message-field input"><%= article.content %></textarea>
+          <input type="submit" value="Update Article" data-wait="Please wait..." class="button button">
+      </form>
+      <div class="success-message-2 form-done">
+          <div>Thank you! Your article has been updated!</div>
+      </div>
+      <div class="error-message-2 form-fail">
+          <div>Oops! Something went wrong while updating the article.</div>
+      </div>
+  </div>
+</div>
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Edit Article</title>
+    <meta content="Alex's Blog Edit Article" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/styles.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">WebFont.load({  google: {    families: ["Inter:100,200,300,regular,500,600,700,800,900"]  }});</script>
+    <link href="/images/small_logo.png" rel="shortcut icon">
+    <link href="/images/logo_webclip.png" rel="apple-touch-icon">
+</head>
+<body class="body">
+    <div class="header">
+        <div class="top-navigation-links" id="id_menu_show">
+            <a href="/admin" aria-current="page" class="navigation-link mobile-nav current">Admin</a>
+            <a href="/analytics" class="navigation-link mobile-nav">Analytics</a>
+            <div class="close-menu-button"><img src="/images/close.svg" loading="lazy" alt="" class="menu-icon" onclick="closeMenu()"></div>
+        </div>
+        <a href="/admin" aria-current="page" class="logo-link-block inline-block current"><img src="/images/logo_vector.svg" loading="lazy" width="Auto" alt="" class="image-2"></a>
+        <div class="open-menu-button"><img src="/images/menu.svg" loading="lazy" alt="" class="menu-icon" id="menu_button_id" onclick="openMenu()"></div>
+    </div>
+    <div class="content-section no-top-padding section">
+        <h1>Edit Article</h1>
+        <div class="form-block form">
+            <form action="/articles/<%= article._id %>?_method=PUT" method="POST" class="contact-form">
+                <input type="text" class="input-field input" maxlength="256" name="title" data-name="Title" placeholder="Article Title" id="title" required="" value="<%= article.title %>">
+                <textarea placeholder="Article Summary" maxlength="1000" id="summary" name="summary" data-name="Summary" required="" class="message-field input"><%= article.summary %></textarea>
+                <textarea placeholder="Article Content" maxlength="5000" id="content" name="content" data-name="Content" required="" class="message-field input"><%= article.content %></textarea>
+                <input type="submit" value="Update Article" data-wait="Please wait.." class="button button">
+            </form>
+            <div class="success-message-2 form-done">
+                <div>Thank you! Your article has been updated!</div>
+            </div>
+            <div class="error-message-2 form-fail">
+                <div>Oops! Something went wrong while updating the article.</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-link-container">
+            <div class="copyright-text">© Alexander Borowski</div>
+        </div>
+    </div>
+    <script src="/myscripts.js"></script>
+</body>
+</html>

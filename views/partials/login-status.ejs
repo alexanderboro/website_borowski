@@ -1,8 +1,8 @@
 <% if (user) { %>
     Logged in as: <%= user.username %>
-    <li><form action="/logout" method="POST">
-        <button type="submit">Logout</button>
-    </form></li>
+    <form action="/logout" method="POST">
+        <button type="submit" class="button">Logout</button>
+    </form>
 <% } else { %>
     <li><a href="/login.html">Login</a></li>
 <% } %>

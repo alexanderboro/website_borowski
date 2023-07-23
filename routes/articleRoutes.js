@@ -28,15 +28,23 @@ articleRouter.get('/articles/:id', (req, res) =>{
 // Blog Post Creation
 articleRouter.post('/articles', isAuthenticated, (req, res) => {
     queryAndSendJsonResponse(req, res, async () => {
-        const article = new Article({ ...req.body, author: req.user.username });
+        const { title, author, content, summary } = req.body;
+        const article = new Article({
+            title,
+            content,
+            summary,
+            author,
+        });
         await article.save();
         return article;
     });
 });
 
+
+
 // Route for rendering the edit-article page
 articleRouter.get('/articles/:id/edit', isAuthenticated, (req, res) =>{
-    // Fetch article by id, then render the 'edit' view
+    // Fetch article by id, then render the "edit" view
     Article.findById(req.params.id)
     .then((article) => {
         res.render('article-edit', { article });

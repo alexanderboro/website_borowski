@@ -1,18 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Blog Analytics</title>
+    <meta charset="utf-8">
+    <title>Blog Analytics</title>
+    <meta content="Page Views Analytics" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/styles.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">WebFont.load({  google: {    families: ["Inter:100,200,300,regular,500,600,700,800,900"]  }});</script>
+    <link href="/images/small_logo.png" rel="shortcut icon">
+    <link href="/images/logo_webclip.png" rel="apple-touch-icon">
 </head>
-<body>
-    <%- include('./partials/login-status') %>
-  <h1>Page Views</h1>
-
-  <ul>
-    <% pageViews.forEach((pageView) => { %>
-      <li>
-        <strong><%= pageView.pageUrl %></strong>: <%= pageView.views %> views
-      </li>
-    <% }); %>
-  </ul>
+<body class="body">
+    <div class="header">
+        <div class="top-navigation-links" id="id_menu_show">
+            <a href="/admin" class="navigation-link mobile-nav">Admin</a>
+            <a href="/analytics" aria-current="page" class="navigation-link mobile-nav current">Analytics</a>
+            <div class="close-menu-button"><img src="/images/close.svg" loading="lazy" alt="" class="menu-icon" onclick="closeMenu()"></div>
+        </div>
+        <a href="/admin" aria-current="page" class="logo-link-block inline-block"><img src="/images/logo_vector.svg" loading="lazy" width="Auto" alt="" class="image-2"></a>
+        <div class="open-menu-button"><img src="/images/menu.svg" loading="lazy" alt="" class="menu-icon" id="menu_button_id" onclick="openMenu()"></div>
+    </div>
+    <div class="content-section-one">
+        <div class="container center-align">
+            <h1>Page Views</h1>
+            <table class="admin-article-table">
+                <thead>
+                    <tr>
+                        <th>Page URL</th>
+                        <th>Views</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% pageViews.forEach((pageView) => { %>
+                        <tr>
+                            <td><%= pageView.pageUrl %></td>
+                            <td><%= pageView.views %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-link-container">
+            <div class="copyright-text">© Alexander Borowski</div>
+        </div>
+    </div>
+    <script src="/myscripts.js"></script>
 </body>
 </html>

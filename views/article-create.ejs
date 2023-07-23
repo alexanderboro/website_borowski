@@ -1,4 +1,5 @@
-<h1>Create New Article</h1>
+
+<!-- <h1>Create New Article</h1>
 
 <form action="/articles" method="POST">
   <label for="title">Title:</label>
@@ -9,3 +10,24 @@
 
   <input type="submit" value="Create Article">
 </form>
+-->
+
+<div class="content-section no-top-padding section">
+  <h1>Create New Article</h1>
+  <div class="form-block form">
+      <form action="/articles" method="POST" class="contact-form">
+          <input type="text" class="input-field input" maxlength="256" name="title" data-name="Title" placeholder="Article Title" id="title" required="">
+          <input type="text" class="input-field input" maxlength="256" name="author" data-name="Author" placeholder="Author Name" id="author" required="">
+          <textarea placeholder="Article Summary" maxlength="1000" id="summary" name="summary" data-name="Summary" required="" class="message-field input"></textarea>
+          <textarea placeholder="Article Content" maxlength="5000" id="content" name="content" data-name="Content" required="" class="message-field input"></textarea>
+          <input type="submit" value="Create Article" data-wait="Please wait..." class="button">
+      </form>
+      <div class="success-message-2 form-done">
+          <div>Thank you! Your article has been created!</div>
+      </div>
+      <div class="error-message-2 form-fail">
+          <div>Oops! Something went wrong while creating the article.</div>
+      </div>
+  </div>
+</div>
+

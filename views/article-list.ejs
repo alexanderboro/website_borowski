@@ -1,5 +1,5 @@
 <h1>Article List</h1>
-
+<!--
 <ul>
   <% articles.forEach((article) => { %>
     <li>
@@ -17,3 +17,55 @@
     </form>
   <% }) %>
 </ul>
+
+
+<div class="admin-article-list">
+  <% articles.forEach((article) => { %>
+    <div class="admin-article-item">
+      <h2 class="admin-article-title"><%= article.title %></h2>
+      <p class="admin-article-summary"><%= article.summary %></p>
+      <p class="admin-article-author">Author: <%= article.author %></p>
+      
+      <div class="button-group">
+        <form action="/articles/<%= article._id %>/edit" method="GET" class="inline">
+          <input type="submit" value="Edit" class="button">
+        </form>
+        <form action="/articles/<%= article._id %>?_method=DELETE" method="POST" class="inline">
+          <input type="submit" value="Delete" class="button">
+        </form>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+-->
+
+
+<table class="admin-article-table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Summary</th>
+      <th>Author</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% articles.forEach((article) => { %>
+      <tr class="admin-article-item">
+        <td class="admin-article-title"><%= article.title %></td>
+        <td class="admin-article-summary"><%= article.summary %></td>
+        <td class="admin-article-author"><%= article.author %></td>
+        <td>
+          <div class="button-group">
+            <form action="/articles/<%= article._id %>/edit" method="GET" class="inline">
+              <input type="submit" value="Edit" class="button">
+            </form>
+            <form action="/articles/<%= article._id %>?_method=DELETE" method="POST" class="inline">
+              <input type="submit" value="Delete" class="button">
+            </form>
+          </div>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
