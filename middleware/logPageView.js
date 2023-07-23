@@ -1,6 +1,6 @@
 import PageView from '../models/page-view.js';
 
-const trackedUrls = ['/articles', '/', '/index', '/about', '/contact'];
+const trackedUrls = ['/articles', '/index', '/about', '/contact'];
 
 const logPageView = async (req, res, next) => {
   const url = req.originalUrl;
