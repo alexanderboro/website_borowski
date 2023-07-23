@@ -239,6 +239,16 @@ blockquote {
   cursor: pointer;
 }
 
+/* Button group on my Admin page */
+.button-group {
+  display: flex; 
+  justify-content: center; 
+  margin-top: 20px; 
+}
+
+.button-group .inline {
+  margin: 0 10px; 
+}
 
 .submit-button {
   height: 50px;
@@ -512,13 +522,40 @@ img {
   padding-bottom: 60px;
 }
 
-/* I have to edit this section.
+
 .login-button {
-  position: 
-  bottom: 10px;
-  right: 10px;
+  position: inline-block;
+  margin-left: 10px;
 }
-*/
+.admin-article-table {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+}
+
+.admin-article-table th,
+.admin-article-table td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ddd; /* Add a simple border */
+}
+
+.admin-article-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.admin-article-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.admin-article-table tr:hover {
+  background-color: #ddd;
+}
+
+
+
+
 /* Making it responsive */
 
 
@@ -534,7 +571,7 @@ img {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 950px) {
   h1 {
     font-size: 40px;
   }
