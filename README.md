@@ -71,7 +71,7 @@ Once the server is running, you can view the blog at [http://localhost:3000](htt
 
 ## Blog Architecture Diagram
 
-![Blog Architecture Diagram](https://i.imgur.com/6V7GVgY.png)
+![Blog Architecture Diagram](https://i.imgur.com/6V7GVgY)
 
 ## Running Tests
 
