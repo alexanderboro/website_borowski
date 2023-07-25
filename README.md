@@ -69,6 +69,10 @@ Once the server is running, you can view the blog at [http://localhost:3000](htt
 - To edit an existing article, first navigate to the corresponding article in the article list on `/admin`. Click the **Edit** button to retrieve the current article data. Then you can edit the article’s information and click **Update** to save your changes. This sends a PUT request to `/articles/:id` with the updated data in the request body.
 - To delete an article, click on **Delete** in the article list. This sends a DELETE request to `/articles/:id`.
 
+## Blog Architecture Diagram
+
+![Blog Architecture Diagram](https://i.imgur.com/6V7GVgY.png)
+
 ## Running Tests
 
 This project does not currently have any tests.
