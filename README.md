@@ -10,6 +10,7 @@ Here I will share my thoughts and monthly highlights with the world.
 - Author login: Only I (so far) can login to write, publish and delete blog posts.
 - Page analytics: I can view page views.
 - Feedback form: A user can send me feedback.
+- Background theme options: A user can choose between "wavvy" and "wlassic" background color style.
 
 ## Technologies Used
 
