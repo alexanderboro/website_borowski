@@ -10,6 +10,7 @@ Here I will share my thoughts and monthly highlights with the world.
 - Author login: Only I (so far) can login to write, publish and delete blog posts.
 - Page analytics: I can view page views.
 - Feedback form: A user can send me feedback.
+- Background theme options: A user can choose between "wavvy" and "wlassic" background color style.
 
 ## Technologies Used
 
@@ -71,7 +72,7 @@ Once the server is running, you can view the blog at [http://localhost:3000](htt
 
 ## Blog Architecture Diagram
 
-<img width="2096" alt="Blog_Architecture" src="https://github.com/alexanderboro/website_borowski/assets/102802301/e365638c-2e85-4a70-9b02-20bad62fb9fa">
+<img width="2096" alt="Blog_Architecture" src="https://github.com/alexanderboro/website_borowski/assets/102802301/468e02e4-b385-40e4-9d31-f0b83d15d5f5">
 
 ## Running Tests
 
