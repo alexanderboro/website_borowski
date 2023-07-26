@@ -106,6 +106,7 @@ blockquote {
 
 .featured-image {
   max-height: 55vh;
+  padding: 20px;
 }
 
 .featured-image.add-padding {
@@ -194,6 +195,22 @@ blockquote {
   text-align: center;
 }
 
+/* Not using my GIPHY pop up right now
+@keyframes popup {
+  0% { transform: translate(-50%, -50%) scale(0); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+#successGif {
+  display: block;
+  visibility: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  animation: popup 5s forwards;
+}
+*/
+
 .error-message.form-fail {
     display: none;
     margin-top: 10px;
@@ -238,6 +255,7 @@ blockquote {
   text-decoration: none;
   cursor: pointer;
 }
+
 
 /* Button group on my Admin page */
 .button-group {
@@ -308,6 +326,7 @@ blockquote {
   padding: 10px;
   font-family: Inter, sans-serif;
   font-weight: 800;
+  align-items: center;
 }
 
 
@@ -527,17 +546,18 @@ img {
   position: inline-block;
   margin-left: 10px;
 }
-.admin-article-table {
-  width: 100%;
-  margin: 20px 0;
-  border-collapse: collapse;
-}
 
 .admin-article-table th,
 .admin-article-table td {
   text-align: left;
   padding: 10px;
-  border: 1px solid #ddd; /* Add a simple border */
+  border: 1px solid #ddd; 
+}
+
+.admin-article-table {
+  width: 100%;
+  margin: 30px auto; 
+  border-collapse: collapse;
 }
 
 .admin-article-table th {
@@ -553,8 +573,21 @@ img {
   background-color: #ddd;
 }
 
+#theme-switcher {
+  margin-left: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: auto;
+  display: block;
+}
 
+.body {
+  transition: background-color 0.5s ease;
+}
 
+.body.dark-mode {
+  background-color: #c6e2ff; 
+}
 
 /* Making it responsive */
 
@@ -569,6 +602,11 @@ img {
     width: 45px;
     height: 40px;
   }
+}
+
+.admin-article-table {
+  width: 90%; 
+  margin: 20px auto; 
 }
 
 @media screen and (max-width: 950px) {
@@ -736,6 +774,10 @@ img {
   }
 }
 
+.admin-article-table {
+  width: 80%; 
+  margin: 10px auto; 
+}
 
 @media screen and (max-width: 479px) {
   h1 {
@@ -812,6 +854,10 @@ img {
   }
 }
 
-
+.admin-article-table th,
+  .admin-article-table td {
+    padding: 1px; 
+    font-size: 12px; 
+  }
 
 

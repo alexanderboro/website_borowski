@@ -1,11 +1,3 @@
-<!-- 
-<h1><%= article.title %></h1>
-
-<p><%= article.content %></p>
-
-<p>Author: <%= article.author %></p>
--->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,11 +18,11 @@
           <a href="/contact.html" class="navigation-link mobile-nav">let's talk</a>
           <div class="close-menu-button"><img src="images/close.svg" loading="lazy" alt="" class="menu-icon" onclick="closeMenu()"></div>
         </div>
-        <a href="/index.html" aria-current="page" class="logo-link-block inline-block current"> <img src="images/logo_vector.svg" loading="lazy" width="Auto" alt="" class="image-2" ></a>
-        <div class="open-menu-button"><img src="images/menu.svg" loading="lazy" alt="" class="menu-icon" id="menu_button_id" onclick="openMenu()" ></div>
+        <a href="/index.html" aria-current="page" class="logo-link-block inline-block current"> <img src="/images/logo_vector.svg" loading="lazy" width="Auto" alt="" class="image-2" ></a>
+        <div class="open-menu-button"><img src="/images/menu.svg" loading="lazy" alt="" class="menu-icon" id="menu_button_id" onclick="openMenu()" ></div>
       </div>
-    <div class="content-section no-padding section">
-        <div class="container center-align"><img src="<%= article.image %>" loading="lazy" sizes="(max-width: 767px) 92vw, 650px" alt="" class="featured-image"></div>
+    <div class="content-section no-padding section"> 
+        <button id="theme-switcher" class="button"></button>
     </div>
     <div class="section no-bottom-padding section">
         <div class="single-post-title">
