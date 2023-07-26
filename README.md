@@ -71,7 +71,7 @@ Once the server is running, you can view the blog at [http://localhost:3000](htt
 
 ## Blog Architecture Diagram
 
-![Blog Architecture Diagram](https://i.imgur.com/6V7GVgY)
+<img width="2096" alt="Blog_Architecture" src="https://github.com/alexanderboro/website_borowski/assets/102802301/e365638c-2e85-4a70-9b02-20bad62fb9fa">
 
 ## Running Tests
 
